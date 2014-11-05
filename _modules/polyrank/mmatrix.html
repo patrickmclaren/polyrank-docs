@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>polyrank.mmatrix &mdash; polyrank 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="polyrank 0.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">polyrank 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for polyrank.mmatrix</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="MMatrix"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix">[docs]</a><span class="k">class</span> <span class="nc">MMatrix</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator class for a Sage matrix of type :class:`sage.structure.element.Matrix`.</span>
+
+<span class="sd">    Provides immutable infix operations by returning a new :class:`MMatrix` that</span>
+<span class="sd">    represents the result. Specifically, the infix operations ``+``, ``-``, and ``*``</span>
+<span class="sd">    are immutable.</span>
+
+<span class="sd">    Matrix rows can be retrived and set using the ``[]`` notation, note that</span>
+<span class="sd">    setting a row is *not* immutable.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">copy</span><span class="p">(</span><span class="n">mat</span><span class="p">))</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The underlying Sage matrix - a subtype of :class:`sage.structure.element.Matrix`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Infix Addition&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Infix Subtraction&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Infix Multiplication&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a copy of row ``i``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">new_row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set row ``i`` to ``new_row``.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_row</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Allows usage of ``copy`` on :class:`MMatrix` instance.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MMatrix.row_size"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.row_size">[docs]</a>    <span class="k">def</span> <span class="nf">row_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the row size (dimension of the image) of :attr:`.matrix`.</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            int</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="MMatrix.column_size"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.column_size">[docs]</a>    <span class="k">def</span> <span class="nf">column_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the column size (dimension of the image of the transpose) of</span>
+<span class="sd">        :attr:`.matrix`.</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="MMatrix.row_reduce"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.row_reduce">[docs]</a>    <span class="k">def</span> <span class="nf">row_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Row reduce :attr:`.matrix`.</span>
+
+<span class="sd">        :Returns:</span>
+<span class="sd">            (reduced matrix, non-zero entries)</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            tuple</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__deepcopy__</span><span class="p">()</span>
+        <span class="n">non_zero</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">new_mat</span><span class="o">.</span><span class="n">max_pivots</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">new_mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">found_row</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_mat</span><span class="o">.</span><span class="n">row_size</span><span class="p">()):</span>
+                    <span class="k">if</span> <span class="n">new_mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">new_mat</span><span class="o">.</span><span class="n">swap_rows</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+                        <span class="n">found_row</span> <span class="o">=</span> <span class="bp">True</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">found_row</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">new_mat</span><span class="p">,</span> <span class="n">non_zero</span><span class="p">)</span>
+
+            <span class="n">pivot</span> <span class="o">=</span> <span class="n">new_mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">non_zero</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pivot</span><span class="p">)</span>
+            <span class="n">new_mat</span><span class="o">.</span><span class="n">scalar_mult</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">pivot</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_mat</span><span class="o">.</span><span class="n">row_size</span><span class="p">()):</span>
+                <span class="n">new_mat</span><span class="o">.</span><span class="n">subtract_row</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+
+            <span class="n">new_mat</span><span class="o">.</span><span class="n">scalar_mult</span><span class="p">(</span><span class="n">pivot</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">new_mat</span><span class="p">,</span> <span class="n">non_zero</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MMatrix.scalar_mult"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.scalar_mult">[docs]</a>    <span class="k">def</span> <span class="nf">scalar_mult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiply :attr:`.matrix` by ``scalar``.</span>
+
+<span class="sd">        :param float scalar: The scalar to multiply :attr:`.matrix` by</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">        </span>
+<span class="sd">           Not immutable.        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_size</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">scalar</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">scalar</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">row</span><span class="p">]]</span>
+</div>
+<div class="viewcode-block" id="MMatrix.swap_rows"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.swap_rows">[docs]</a>    <span class="k">def</span> <span class="nf">swap_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Swap row ``i`` with row ``j``.</span>
+
+<span class="sd">        :param int i: The first row number</span>
+<span class="sd">        :param int j: the second row number</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">        </span>
+<span class="sd">           Not immutable.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">row_i</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">row_j</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">row_j</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">row_i</span>
+</div>
+<div class="viewcode-block" id="MMatrix.subtract_row"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.subtract_row">[docs]</a>    <span class="k">def</span> <span class="nf">subtract_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mult</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Subtract ``mult`` times row ``i`` from row ``j``.</span>
+
+<span class="sd">        :param float mult: The scalar to multiply row ``i``</span>
+<span class="sd">        :param int i: The row to subtract from row ``j``</span>
+<span class="sd">        :param int j: The row from which row ``i`` is subtracted</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">           Not immutable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">row_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">mult</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="n">row_j</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">row_j</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">row_i</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_j</span><span class="p">))]</span>
+</div>
+<div class="viewcode-block" id="MMatrix.get_pivots"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.get_pivots">[docs]</a>    <span class="k">def</span> <span class="nf">get_pivots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of the pivots of :attr:`.matrix`.</span>
+
+<span class="sd">        :Returns:</span>
+<span class="sd">            [pivot_1, pivot_2, ..., pivot_n]</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_reduced</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_pivots</span><span class="p">())]</span>
+</div>
+<div class="viewcode-block" id="MMatrix._is_reduced"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix._is_reduced">[docs]</a>    <span class="k">def</span> <span class="nf">_is_reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns ``True`` if :attr:`.matrix` is row reduced, and ``False`` otherwise.</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_pivots</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_size</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+</div>
+<div class="viewcode-block" id="MMatrix.max_pivots"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.max_pivots">[docs]</a>    <span class="k">def</span> <span class="nf">max_pivots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the maximum possible number of pivots of :attr:`.matrix`.</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_size</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_size</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="MMatrix.apply_fn"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.apply_fn">[docs]</a>    <span class="k">def</span> <span class="nf">apply_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply ``fn`` with positional parameters ``args`` and keyword</span>
+<span class="sd">        parameters ``kwargs`` to the rows of :attr:`.matrix`.</span>
+
+<span class="sd">        :param function fn: The function to apply to :attr:`.matrix`</span>
+<span class="sd">        :param \*args args: Positional parameters to be applied to ``fn``</span>
+<span class="sd">        :param \*\*kwargs kwargs: Keyword parameters to be applied to ``fn``</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            :class:`MMatrix`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__deepcopy__</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">new_mat</span><span class="o">.</span><span class="n">row_size</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">new_mat</span><span class="o">.</span><span class="n">column_size</span><span class="p">()):</span>
+                <span class="n">new_mat</span><span class="o">.</span><span class="n">update_entry</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">fn</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">new_mat</span>
+</div>
+<div class="viewcode-block" id="MMatrix.update_entry"><a class="viewcode-back" href="../../polyrank.html#polyrank.mmatrix.MMatrix.update_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update entry in row `i`, column `j` to `val`.</span>
+
+<span class="sd">        :param int i: The row number of the entry to be updated</span>
+<span class="sd">        :param int j: The column number of the entry to be updated</span>
+<span class="sd">        :param Polynomial val: The new value for entry ``i, j``</span>
+
+<span class="sd">        :Returns Type:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">           Not immutable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tmp_row</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">tmp_row</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_row</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">polyrank 0.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Patrick McLaren.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
